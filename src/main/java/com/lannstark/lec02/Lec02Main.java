@@ -6,6 +6,15 @@ public class Lec02Main {
 
   }
 
+  public long earlyReturn(Long number) {
+    if (number == null) {
+      return 0;
+    }
+
+    // 다음 로직
+    return 1;
+  }
+
   public boolean startsWithA1(String str) {
     if (str == null) {
       throw new IllegalArgumentException("null이 들어왔습니다");
