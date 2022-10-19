@@ -18,9 +18,21 @@ public class Lec17Main {
         new Fruit("바나나", 2_500),
         new Fruit("수박", 10_000)
     );
+
+
+    /*
+    자바에서는 람다를 쓸 때 람다 밖에 있는 변수를 사용하는 경우 제약이 있다
+    final인 변수 혹은 실질적으로 final인 변수만 사용할 수 있다
+     */
+    String targetFruitName = "asdf";
+    targetFruitName = "asdfasdf";
+//    filterFruits(fruits, (fruit -> targetFruitName.equals(fruit.getName())));
+
+
+
   }
 
-  private List<Fruit> filterFruits(List<Fruit> fruits, Predicate<Fruit> fruitFilter) {
+  private static List<Fruit> filterFruits(List<Fruit> fruits, Predicate<Fruit> fruitFilter) {
     List<Fruit> results = new ArrayList<>();
     for (Fruit fruit : fruits) {
       if (fruitFilter.test(fruit)) {
