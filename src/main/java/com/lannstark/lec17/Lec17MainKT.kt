@@ -84,17 +84,82 @@ fun main() {
     inline 함수이다
     람다를 받게 만들어진 함수이다
      */
+
+
+    // 필터와 맵
+    val apples = fruits.filter { fruit -> fruit.name == "사과" }
+    val apples2 = fruits.filterIndexed { idx, fruit ->
+        println(idx)
+        fruit.name == "사과"
+    }
+    val applePrices = apples.map { fruit -> fruit.price }
+    val applePrices2 = apples2.mapIndexed { idx, fruit ->
+        println(idx)
+        fruit.price
+    }
+    // mapping의 결과가 null이 아닌 것만 가져오고 싶을 때
+    val values = fruits.filter { fruit -> fruit.name == "사과" }
+        .mapNotNull { fruit -> null }
+    // all : 조건을 모두 만족하면 true 아니면 false
+    val isAllApple = fruits.all { fruit -> fruit.name == "사과" }
+    // none : all과 반대
+    val isNoApple = fruits.none { fruit -> fruit.name == "사과" }
+    // any : 조건을 하나라도 만족하면 true 아니면 false
+    val isAnyApple = fruits.any { fruit -> fruit.name == "사과" }
+    // 수
+    val fruitCount = fruits.count()
+    // 오름차순 정렬
+    val fruitOrdered = fruits.sortedBy { fruit -> fruit.price }
+    // 내림차순 정렬
+    val fruitOrdered2 = fruits.sortedByDescending { fruit -> fruit.price }
+    // 변형된 값을 기준으로 중복을 제거
+    val distinctFruitNames = fruits.distinctBy { fruit -> fruit.name }
+        .map { fruit -> fruit.name }
+    // first : 첫번째 값 가져온다 (무조건 Null 이 아니어야함) 빈 리스트면 exception 발생
+    fruits.first()
+    // firstOrNull : 첫번째 값 또는 null을 가져온다
+    fruits.firstOrNull()
+    // last, lastOrNull
+    // list를 map으로 (이름을 기준으로)
+    val map: Map<String, List<Fruit>> = fruits.groupBy { fruit -> fruit.name }
+    // price -> 과일 map
+    // value에 list가 아닌 단일객체가 들어간다
+    // 중복되지 않은 key로 map을 만들 때 사용한다
+    val map2: Map<Int, Fruit> = fruits.associateBy { fruit -> fruit.price }
+    // key와 value를 동시에 처리
+    // 함수(중괄호)가 하나인 경우는 () 밖으로 뺄 수 있지만 2개 이상인 경우는 () 안에 넣어주는것이 컨벤션이다
+    val map3: Map<String, List<Int>> = fruits.groupBy({ fruit -> fruit.name}, {fruit -> fruit.price})
+    val map4: Map<String, Int> = fruits.associateBy({ fruit -> fruit.name}, {fruit -> fruit.price})
+    // map에서도 앞에 나온 기능들을 대부분 사용할 수 있다
+    val map5: Map<String, List<Fruit>> = fruits.groupBy { fruit -> fruit.name }
+        .filter { (key, value) -> key == "사과" }
+    // 중첩된 컬렉션 처리 (List<List<Fruit>>)
+    // flatMap을 쓰면 list<list>가 단일 list로 바뀌게 되고 그 과정에서 조건을 걸 수도 있다
+//    val samePriceFruits = fruitsInList.flatMap { list ->
+//        list.filter { fruit -> fruits.factoryPrice == fruit.currentPrice }
+//    }
+    // 아래와 같이 확장함수를 이용해서 리팩토링도 가능
+//    val List<Fruit>.samePriceFilter: List<Fruit>
+//        get() this.filter(Fruit::isSamePrice)
+//    val samePriceFruits = fruitsInList.flatMap { list -> list.samePriceFilter }
+    // List<List<Fruit>>를 List<Fruit>로 그냥 바꿀때
+    // flatten을 사용하면 중첩된 컬렉션이 단순히 평탄하게 바뀐다
+//    fruitsInList.flattten()
+
+
 }
 
 // 함수 인터페이스를 사용하는 것이 아니라 함수 자체를 넘길 수 있다
 private fun filterFruits(fruits: List<Fruit>, filter: (Fruit) -> Boolean): List<Fruit> {
-    val results = mutableListOf<Fruit>()
-    for (fruit in fruits) {
-        if (filter(fruit)) {
-            results.add(fruit)
-        }
-    }
-    return results
+//    val results = mutableListOf<Fruit>()
+//    for (fruit in fruits) {
+//        if (filter(fruit)) {
+//            results.add(fruit)
+//        }
+//    }
+//    return results
+
+    return fruits.filter(filter)
 }
 
 
