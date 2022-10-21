@@ -1,4 +1,4 @@
-package com.lannstark.lec17
+package com.lannstark.lec17lec18
 
 // 코틀린에서 람다를 다루는 방법
 // 강의노트 참고!!!!!!!!!!!!!!!!

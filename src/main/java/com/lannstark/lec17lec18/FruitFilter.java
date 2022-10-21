@@ -1,4 +1,4 @@
-package com.lannstark.lec17;
+package com.lannstark.lec17lec18;
 
 public interface FruitFilter {
 
